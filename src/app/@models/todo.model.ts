@@ -6,6 +6,8 @@ export interface Todo {
     CanEdit: boolean;
     Seqno: number;
     CreateTime: Date;
+    AccountId?: string;
+    GroupId?: string;
 }
 
 export class TodoClass implements Todo {

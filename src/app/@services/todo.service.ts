@@ -8,7 +8,8 @@ import { TodoApiService } from './todo-api.service';
 export class TodoService {
   toggleAllBtn = false;
   nowTodoStatusType = TodoStatusType.All;
-  todoDataList: Todo[] = [];  
+  todoDataList: Todo[] = [];
+  gid = '';
 
   get nowTodoList() {
     let list: Todo[] = [];
@@ -35,25 +36,28 @@ export class TodoService {
   get todoCompleted(): Todo[] {
     return this.todoDataList.filter(data => data.Status);
   }
-  
-  constructor(private todoApiService: TodoApiService) {
-    this.getData();
-  }
+
+  constructor(private todoApiService: TodoApiService) { }
 
   getData() {
-    this.todoApiService.取得資料().subscribe(data => {
+    this.todoApiService.取得資料(this.gid).subscribe(data => {
       this.todoDataList = data;
-      this.todoDataList.forEach(data2 => {
-        data2.CanEdit = true;
-        data2.Editing = false;
-      });
-      this.checkToggleAllBtn();
+      this.ready();
     });
+  }
+
+  ready() {
+    this.todoDataList.forEach(data2 => {
+      data2.CanEdit = true;
+      data2.Editing = false;
+    });
+    this.checkToggleAllBtn();
   }
 
   add(value: string) {
     const seqno = new Date().getTime();
     const todo: Todo = new TodoClass(value, false, seqno);
+    todo.GroupId = this.gid;
     this.todoDataList.push(todo);
     this.todoApiService.新增(todo).subscribe(data => {
       this.todoDataList.forEach(data2 => {
@@ -88,11 +92,11 @@ export class TodoService {
       data.Status = this.toggleAllBtn;
     });
 
-    this.todoApiService.全部狀態統一(this.toggleAllBtn).subscribe();
+    this.todoApiService.全部狀態統一(this.toggleAllBtn, this.gid).subscribe();
   }
 
   clearCompleted() {
-    this.todoApiService.刪除已完成事項().subscribe();
+    this.todoApiService.刪除已完成事項(this.gid).subscribe();
     this.todoDataList = this.todoActive;
   }
 
@@ -103,9 +107,10 @@ export class TodoService {
       this.toggleAllBtn = false;
     }
   }
-  
+
   setTodoStatusType(type: number) {
     this.nowTodoStatusType = type;
   }
+
 
 }

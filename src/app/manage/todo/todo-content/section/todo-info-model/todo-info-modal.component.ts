@@ -1,5 +1,6 @@
-import { Todo } from './../../../@models/todo.model';
+
 import { Component, Input, OnInit } from '@angular/core';
+import { Todo } from 'src/app/@models/todo.model';
 
 @Component({
   selector: 'app-todo-info-modal',
