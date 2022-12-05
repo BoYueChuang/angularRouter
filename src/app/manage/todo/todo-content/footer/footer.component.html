@@ -3,17 +3,17 @@
             <li>
                 <a [class.selected]="nowTodoStatusType===TodoStatusType.All"
                    (click)="setTodoStatusType(TodoStatusType.All)"
-                   href="#/">All</a>
+                   routerLink="../All">All</a>
             </li>
             <li>
                 <a [class.selected]="nowTodoStatusType===TodoStatusType.Active"
                    (click)="setTodoStatusType(TodoStatusType.Active)"
-                   href="#/active">Active</a>
+                   routerLink="../Active">Active</a>
             </li>
             <li>
                 <a [class.selected]="nowTodoStatusType===TodoStatusType.Completed"
                    (click)="setTodoStatusType(TodoStatusType.Completed)"
-                   href="#/completed">Completed</a>
+                   routerLink="../Completed">Completed</a>
             </li>
         </ul>
         <button class="clear-completed"

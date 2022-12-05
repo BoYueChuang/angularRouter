@@ -3,10 +3,25 @@ import { TodoListComponent } from './todo-list/todo-list.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TodoComponent } from './todo.component';
+import { TodoListResolver, TodoResolver } from 'src/app/@resolves/todo.resolver';
 
 const routes: Routes = [
-  { path: 'list', component: TodoListComponent },
-  { path: 'content/:id', component: TodoContentComponent },
+  {
+    path: 'list',
+    component: TodoListComponent,
+    resolve: { dataList: TodoListResolver }
+  },
+  {
+    path: 'content/:id',
+    children: [
+      {
+        path: ':action',
+        component: TodoContentComponent,
+        resolve: { todoList: TodoResolver }
+      },
+      { path: '', redirectTo: 'All', pathMatch: 'full' }
+    ]
+  },
   { path: '', redirectTo: 'list', pathMatch: 'full' }
 ];
 

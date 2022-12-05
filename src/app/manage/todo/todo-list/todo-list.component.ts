@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Group } from 'src/app/@models/group.model';
 import { GroupApiService } from 'src/app/@services/group-api.service';
@@ -11,11 +12,11 @@ export class TodoListComponent implements OnInit {
   dataList: Group[] = [];
 
 
-  constructor(private groupApiService: GroupApiService) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.groupApiService.取得資料().subscribe(data => {
-      this.dataList = data;
+    this.route.data.subscribe(data => {
+      this.dataList = data['dataList'];
     });
   }
 

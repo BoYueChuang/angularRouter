@@ -33,5 +33,4 @@ export class TodoApiService {
   刪除已完成事項(id: string) {
     return this.http.delete(`${this.url}/clearCompleted/${id}`);
   }
-
 }

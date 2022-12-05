@@ -112,5 +112,4 @@ export class TodoService {
     this.nowTodoStatusType = type;
   }
 
-
 }
